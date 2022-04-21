@@ -4,6 +4,8 @@ const express = require('express')
 const socketio =  require('socket.io')
 //requiring an http server
 const http = require('http')
+// var cors = require('cors')
+
 
 const PORT = process.env.PORT || 5000
 
@@ -25,6 +27,7 @@ io.on('connection', (socket) =>{
 
 //middleware in creating express route
 app.use(router);
+
 
 //listening to the request
 server.listen(PORT, () => console.log(`server is running on port ${PORT}`))
