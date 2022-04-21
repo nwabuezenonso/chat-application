@@ -20,14 +20,24 @@ function Chat({location}) {
     
     socket = io(ENDPOINT)
 
-    setName(name)
-    setRoom(room)
+    setName(name);
+    setRoom(room);
 
-    socket.emit()
+
+    socket.emit('join', { name, room}, ()=>{
+     
+    });
+
+    //return statement is use for unmounting (disconnect event)
+    return () =>{
+      socket.emit('disconnect');
+
+      socket.off();
+    }
     //second parameter allow us to specify when the use effect is called
     //we need to specify when our use effect is called
-    //it means only that when the value changed that it will render the data
-  }, [ENDPOINT, location.search])
+    //it means that it will only activate if the data the array change
+  }, [ENDPOINT, location.search]);
   return (
     <div><h1>Chat</h1></div>
   )

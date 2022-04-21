@@ -18,8 +18,17 @@ const app = express();
 const server = http.createServer(app)
 const io = socketio(server)
 
+
+//socket is the instance of a client 
 io.on('connection', (socket) =>{
     console.log('we have a new connection')
+
+    //server listen to the connection by specifying the event
+    socket.on('join', ({name, room}, callback) =>{
+        console.log(name, room)
+
+ 
+    })
     socket.on('disconnect', () => {
         console.log('User had left')
     })
