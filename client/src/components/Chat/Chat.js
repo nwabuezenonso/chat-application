@@ -7,10 +7,13 @@ import io from 'socket.io-client'
 
 let socket;
 
+//we can use as many useeffect hook in out component
 function Chat({location}) {
 
   const [name, setName ] = useState('');
   const [room, setRoom] = useState('');
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
   const ENDPOINT = 'localhost:5000'
 
   //it run after the component is rendered
@@ -28,6 +31,8 @@ function Chat({location}) {
      
     });
 
+
+
     //return statement is use for unmounting (disconnect event)
     return () =>{
       socket.emit('disconnect');
@@ -38,8 +43,34 @@ function Chat({location}) {
     //we need to specify when our use effect is called
     //it means that it will only activate if the data the array change
   }, [ENDPOINT, location.search]);
+
+  useEffect(()=>{
+    socket.on('message', (message)=>{
+      //adding every new messages to our messages array
+      setMessages([...messages, message])
+    })
+  }, [messages])
+
+  //function for sending messages
+  const sendMessage = (event) =>{
+    event.preventDefault()
+
+    if(message){
+      socket.emit('sendMessage', message, () => setMessage(''))
+    }
+  }
+
+  console.log(message, messages)
   return (
-    <div><h1>Chat</h1></div>
+    <div className='outerContainer'>
+      <div className='container'>
+        <input 
+        value={message} 
+        onChange={(event)=> setMessage(event.target.value)} 
+        onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null}
+        />
+      </div>
+    </div>
   )
 }
 
