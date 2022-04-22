@@ -4,6 +4,9 @@ const express = require('express');
 const socketio =  require('socket.io');
 //requiring an http server
 const http = require('http');
+//add it so that all socket will not be ignored
+//cross origin resource sharing
+const cors = require("cors")
 
 
 const {addUser, removeUser, getUser, getUsersInRoom} = require('./users');
@@ -39,7 +42,7 @@ io.on('connection', (socket) =>{
         //if thet are no error, it join a user in a room
         //join are built in socket method
         socket.join(user.room)
-
+        io.to(user.room).emit('roomData', {room: user.room, users: getUsersInRoom(user, room)})
         callback()
     });
 
@@ -49,19 +52,25 @@ io.on('connection', (socket) =>{
         const user = getUser(socket.id)
 
         //specify the room name to emit data
-        io.to(user.room).emit('message', {user: user.name, text: message});
+        io.to(user.room).emit('message', { user: user.name, text: message });
+        io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
 
         callback()
     });
 
     socket.on('disconnect', () => {
-        console.log('User had left')
+        const user = removeUser(socket.id);
+
+        if(user) {
+          io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
+          io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
+        }
     })
 });
 
 //middleware in creating express route
 app.use(router);
-
+app.use(cors())
 
 //listening to the request
 server.listen(PORT, () => console.log(`server is running on port ${PORT}`))
