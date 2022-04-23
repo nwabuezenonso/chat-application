@@ -5,4 +5,4 @@
 <!--![image](link) -->
 
 ## Setup
-Run npm install && npm start for both client and server directory
+Run <code>npm install && npm start </code> for both client and server directory to start the development server
