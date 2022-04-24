@@ -1,20 +1,24 @@
+//importing react file from react
 import React from 'react';
-
+//importing message file
 import './Message.css';
 
-
-//if we are loading multiple files and we are also loading some logic we use braces
+//if we are loading several function and we are also loading some logic and  we use braces
 const Message = ({message: { user, text}, name}) =>{
+
+    //create a boolean variable
     let isSentByCurrentUser = false;
 
+    //trimmed name variable
     const trimmedName = name.trim().toLowerCase();
 
+    //conditional statement if the user == name of the sender
     if(user === trimmedName){
         isSentByCurrentUser = true
     }
 
     return (
-        //ternary operator (meaning if it is true then it render something)
+        //ternary operator (meaning if it is true then it render content and styling sent by user)
         isSentByCurrentUser 
         ? (
             <div className="messageContainer justifyEnd">

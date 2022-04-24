@@ -1,7 +1,10 @@
+//import react file
 import React from 'react'
 
+//import css file
 import './Input.css'
 
+//passing props into the function
 const Input = ({message, setMessage, sendMessage}) =>(
     <form className="form">
         <input 

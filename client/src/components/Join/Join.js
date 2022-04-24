@@ -1,8 +1,13 @@
 //react hooks are function that are passed into function based component
 //with react hooks we can pass in state or life cycle component in our functional component
 import React, {useState} from 'react';
+//import link for creating link in jsx
 import {Link} from 'react-router-dom';
+//importing css
 import './Join.css';
+
+//Note: A css file can be loaded like "import ./join" calling the files require a className
+//Note: A javascript file can be loaded different bacause calling javascript in jsx require a variable or some distructuring to pass in the data to be called
 
 function Join() {
   const [name, setName ] = useState('');

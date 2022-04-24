@@ -1,3 +1,4 @@
+//create the new set of users and mapping it to the text container
 import React from 'react';
 
 import onlineIcon from '../../icons/onlineIcon.png';
