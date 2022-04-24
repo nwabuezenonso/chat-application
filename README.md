@@ -6,6 +6,5 @@ Click the link above and fill the form with a name and a room and allow another 
 <!--![image](link) -->
 
 ## Setup
-```
 Run <code>npm install && npm start </code> for both client and server directory to start the development server
-```
+
